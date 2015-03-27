@@ -77,7 +77,16 @@ class Pattern
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
-    
+
+    /**
+     * @var PatternCategory
+     *
+     * @ORM\ManyToOne(targetEntity="PatternCategory", inversedBy="patterns")
+     * @ORM\JoinColumn(name="pattern_category_id", referencedColumnName="id")
+     * @ORM\OrderBy({"label"= "ASC"})
+     */
+    private $patternCategory;
+
     /**
      * @ORM\OneToMany(targetEntity="PatternEvent", mappedBy="pattern", cascade={"persist", "remove", "refresh"})
      */
@@ -376,5 +385,28 @@ class Pattern
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set patternCategory
+     *
+     * @param \AppBundle\Entity\PatternCategory $patternCategory
+     * @return Pattern
+     */
+    public function setPatternCategory(\AppBundle\Entity\PatternCategory $patternCategory = null)
+    {
+        $this->patternCategory = $patternCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get patternCategory
+     *
+     * @return \AppBundle\Entity\PatternCategory 
+     */
+    public function getPatternCategory()
+    {
+        return $this->patternCategory;
     }
 }

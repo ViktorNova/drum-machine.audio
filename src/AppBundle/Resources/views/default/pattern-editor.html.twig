@@ -1,32 +1,120 @@
 <div id="pattern-editor" style="display: none;">
-	<div class="well well-sm">
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed"
-						data-toggle="collapse" data-target="#pattern-editor-top-navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<span class="navbar-brand"> <span class="glyphicon glyphicon-edit"></span>
-						Pattern editor
-					</span>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse"
+							data-target="#pattern-editor-top-navbar-collapse">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<span class="navbar-brand"> <span class="glyphicon glyphicon-edit"></span>
+							Pattern editor
+						</span>
+					</div>
+					<div class="collapse navbar-collapse"
+						id="pattern-editor-top-navbar-collapse">
+						<ul class="nav navbar-nav navbar-left">
+							<li><a class="pattern-editor-save btn btn-default navbar-btn"> <span
+									class="glyphicon glyphicon-save"></span> Save
+							</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a class="pattern-editor-close btn btn-default navbar-btn"> <span
+									class="glyphicon glyphicon-remove-sign"></span> Close
+							</a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="collapse navbar-collapse" id="pattern-editor-top-navbar-collapse">
-					<ul class="nav navbar-nav navbar-left">
-						<li><a class="save btn btn-default navbar-btn"> <span
-								class="glyphicon glyphicon-save"></span> Save
-						</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li><a class="btn btn-default navbar-btn"> <span
-								class="glyphicon glyphicon-remove-sign"></span> Close
-						</a></li>
-					</ul>
+			</nav>
+			<div class="row">
+				<div class="col-xs-12 col-md-8">PatternEvent editor</div>
+				<div id="pattern-editor-right" class="col-xs-12 col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">Basic data</div>
+						<div class="panel-body">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label for="pattern-editor-label">Label</label> <input
+										type="text" class="form-control" id="pattern-editor-label"
+										placeholder="Label" />
+									<span class="help-block">
+										Pattern name
+										<br />
+										<b>Ex :</b> <i>"My awesome new pattern"</i>
+									</span>
+								</div>
+								<div class="form-group">
+									<label for="pattern-editor-slug">Slug <small>- <a href="#"
+											id="pattern-editor-generate-slug"
+											class="btn btn-default btn-xs">Generate slug from label</a></small></label>
+									<input type="text" class="form-control" id="pattern-editor-slug"
+										placeholder="Slug" />
+									<span class="help-block">
+										Only lowercase letters, integers and '-' characters allowed. No spaces.
+										<br />
+										<b>Ex :</b> <i>"my-awesome-new-pattern"</i>
+										<br />
+										Use the "Generate slug from label" button above in order to automatically
+										(re-)generate the slug from the current label.
+									</span>
+								</div>
+								<div class="form-group">
+									<label for="pattern-editor-description">Description</label>
+									<textarea class="form-control" id="pattern-editor-description"
+										placeholder="Description" rows="4"></textarea>
+									<span class="help-block">
+										Textual description of the pattern
+									</span>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">Rhythmic structure</div>
+						<div class="panel-body">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label for="pattern-editor-nb-beats-in-cell">Beats per rhythmic	cell</label>
+									<input type="number" class="form-control"
+										id="pattern-editor-nb-beats-in-cell" placeholder="8" min="1" />
+									<span class="help-block">
+										A rhythmic cell is made of <i>n</i> beats.
+									</span>
+								</div>
+								<div class="form-group">
+									<label for="pattern-editor-nb-cell">Rhythmic cells</label>
+									<input type="number" class="form-control"
+										id="pattern-editor-nb-cell" placeholder="2" min="1" />
+									<span class="help-block">
+										The rhythmic cell is looped over <i>n</i> times to form the pattern's structure.
+									</span>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">Sharing</div>
+						<div class="panel-body">
+							<form class="form-inline">
+								<div class="form-group">
+									<label for="pattern-editor-is-public">Pattern is public</label>
+									<input type="checkbox" class="form-control"
+										id="pattern-editor-is-public" />
+								</div>
+								<div class="form-group">
+									<label for="pattern-editor-is-default">Pattern is loaded by default</label>
+									<input type="checkbox" class="form-control"
+										id="pattern-editor-is-default" />
+								</div>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
-		</nav>
+		</div>
 	</div>
 </div>

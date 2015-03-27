@@ -67,3 +67,14 @@ footer {
     padding: 40px 0;
     text-align: center;
 }
+
+/* Pattern editor */
+
+#pattern-editor textarea.form-control {
+	resize: none;
+}
+
+#pattern-editor-right .panel .panel-body {
+	padding-left: 21px;
+	padding-right: 21px;
+}
