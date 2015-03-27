@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block head_title %}Welcome !{% endblock %} - A Compás - Flamenco metronome</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <!-- Optional Bootstrap theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="{{ asset('bundles/app/css/main.css') }}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+
+    	{% include "header.html.twig" %}
+    	
+    	<section class="container">
+	        {% block body %}{% endblock %}
+	    </section>
+	    
+	    {% include "footer.html.twig" %}
+        
+        <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="/lib/jquery.knob.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+			var metronomeWorkerFilename = "{{ asset('bundles/app/js/metronome/metronome-worker.js') }}";
+			var patternsJsonUrl = "{{ asset('bundles/app/json/metronome/patterns.json') }}";
+			var sounds = {{ sounds|json_encode|raw }};
+			var patterns = {{ patterns|json_encode|raw }};
+			var pageActions = {{ pageActions|json_encode|raw }};
+        </script>
+        {% javascripts
+        	'@AppBundle/Resources/public/js/common.js'
+   			'@AppBundle/Resources/public/js/pattern-editor.js'
+        	'@AppBundle/Resources/public/js/metronome/metronome.js'
+        	'@AppBundle/Resources/public/js/metronome/metronome-worker.js'
+        %}
+    		<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+        {% block javascripts %}{% endblock %}
+
+    </body>
+</html>

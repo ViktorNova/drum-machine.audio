@@ -1,0 +1,32 @@
+{
+    "sounds": [
+        {
+            "slug": "clara-1",
+            "label": "Palma clara 1"
+        },
+        {
+            "slug": "clara-2",
+            "label": "Palma clara 2"
+        },
+        {
+            "slug": "clara-3",
+            "label": "Palma clara 3"
+        },
+        {
+            "slug": "sorda-1",
+            "label": "Palma sorda 1"
+        },
+        {
+            "slug": "sorda-2",
+            "label": "Palma sorda 2"
+        },
+        {
+            "slug": "udu-1",
+            "label": "Udu 1"
+        },
+        {
+            "slug": "udu-2",
+            "label": "Udu 2"
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="row">
+	<div class="col-xs-12">
+		<div id="patterns-tabpanel" role="tabpanel">
+		
+			<!-- Nav tabs -->
+			<ul id="palos" class="nav nav-tabs" role="tablist">
+			</ul>
+		
+			<!-- Tab panes -->
+			<div id="metronome-tab-content" class="tab-content">
+			</div>
+		
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		{% include "AppBundle:default:pattern-editor.html.twig" %}
+	</div>
+</div>
+
+{% endblock %}
