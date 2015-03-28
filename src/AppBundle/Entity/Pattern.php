@@ -12,6 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Pattern
 {
+
+	/**
+	 * Constants for the timeSignatureDown attribute (its values)
+	 */
+	const TIME_SIGNATURE_DOWN_WHOLE_NOTE = 1;
+	const TIME_SIGNATURE_DOWN_HALF_NOTE = 2;
+	const TIME_SIGNATURE_DOWN_QUARTER_NOTE = 4;
+	const TIME_SIGNATURE_DOWN_EIGHTH_NOTE = 8;
+	const TIME_SIGNATURE_DOWN_SIXTEENTH_NOTE = 16;
+
     /**
      * @var integer
      *
@@ -45,9 +55,23 @@ class Pattern
     /**
      * @var integer
      * 
-     * @ORM\Column(name="nb_beats_in_cell", type="integer")
+     * @ORM\Column(name="time_signature_up", type="integer")
      */
-    private $nbBeatsInCell;
+    private $timeSignatureUp;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="time_signature_down", type="integer")
+     */
+    private $timeSignatureDown;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="beat_depth", type="integer")
+     */
+    private $beatDepth;
     
     /**
      * @var boolean
@@ -91,11 +115,6 @@ class Pattern
      * @ORM\OneToMany(targetEntity="PatternEvent", mappedBy="pattern", cascade={"persist", "remove", "refresh"})
      */
     private $patternEvents;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="Palo", mappedBy="patterns")
-     */
-    private $palos;
 
     /**
      * Get id
@@ -217,85 +236,6 @@ class Pattern
     }
 
     /**
-     * Add palos
-     *
-     * @param \AppBundle\Entity\Palo $palos
-     * @return Pattern
-     */
-    public function addPalo(\AppBundle\Entity\Palo $palos)
-    {
-        $this->palos[] = $palos;
-
-        return $this;
-    }
-
-    /**
-     * Remove palos
-     *
-     * @param \AppBundle\Entity\Palo $palos
-     */
-    public function removePalo(\AppBundle\Entity\Palo $palos)
-    {
-        $this->palos->removeElement($palos);
-    }
-
-    /**
-     * Get palos
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPalos()
-    {
-        return $this->palos;
-    }
-
-    /**
-     * Set nbBeats
-     *
-     * @param integer $nbBeats
-     * @return Pattern
-     */
-    public function setNbBeats($nbBeats)
-    {
-        $this->nbBeats = $nbBeats;
-
-        return $this;
-    }
-
-    /**
-     * Get nbBeats
-     *
-     * @return integer 
-     */
-    public function getNbBeats()
-    {
-        return $this->nbBeats;
-    }
-
-    /**
-     * Set nbBeatsInCell
-     *
-     * @param integer $nbBeatsInCell
-     * @return Pattern
-     */
-    public function setNbBeatsInCell($nbBeatsInCell)
-    {
-        $this->nbBeatsInCell = $nbBeatsInCell;
-
-        return $this;
-    }
-
-    /**
-     * Get nbBeatsInCell
-     *
-     * @return integer 
-     */
-    public function getNbBeatsInCell()
-    {
-        return $this->nbBeatsInCell;
-    }
-
-    /**
      * Set nbCell
      *
      * @param integer $nbCell
@@ -408,5 +348,75 @@ class Pattern
     public function getPatternCategory()
     {
         return $this->patternCategory;
+    }
+
+
+    /**
+     * Set timeSignatureUp
+     *
+     * @param integer $timeSignatureUp
+     * @return Pattern
+     */
+    public function setTimeSignatureUp($timeSignatureUp)
+    {
+        $this->timeSignatureUp = $timeSignatureUp;
+
+        return $this;
+    }
+
+    /**
+     * Get timeSignatureUp
+     *
+     * @return integer 
+     */
+    public function getTimeSignatureUp()
+    {
+        return $this->timeSignatureUp;
+    }
+
+    /**
+     * Set timeSignatureDown
+     *
+     * @param integer $timeSignatureDown
+     * @return Pattern
+     */
+    public function setTimeSignatureDown($timeSignatureDown)
+    {
+        $this->timeSignatureDown = $timeSignatureDown;
+
+        return $this;
+    }
+
+    /**
+     * Get timeSignatureDown
+     *
+     * @return integer 
+     */
+    public function getTimeSignatureDown()
+    {
+        return $this->timeSignatureDown;
+    }
+
+    /**
+     * Set beatDepth
+     *
+     * @param integer $beatDepth
+     * @return Pattern
+     */
+    public function setBeatDepth($beatDepth)
+    {
+        $this->beatDepth = $beatDepth;
+
+        return $this;
+    }
+
+    /**
+     * Get beatDepth
+     *
+     * @return integer 
+     */
+    public function getBeatDepth()
+    {
+        return $this->beatDepth;
     }
 }
