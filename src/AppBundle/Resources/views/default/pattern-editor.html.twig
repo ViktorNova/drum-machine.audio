@@ -40,24 +40,92 @@
 						<div class="panel-heading">1. Rhythmic cells structure</div>
 						<div class="panel-body">
 							<div class="col-xs-12 col-md-6">
-								<div class="main-structure">
-									<blockquote><small>Main structure</small></blockquote>
-									<span class="main-structure-as-string"></span>
+								<div class="rhythmic-structure">
+									<blockquote><small>Rhythmic structure</small></blockquote>
+									<p>
+										<span class="structure-as-string"></span>
+									</p>
+									<div class="btn-group" role="group" aria-label="pattern-editor-structure-actions"
+										id="pattern-editor-structure-actions">
+										<button type="button" class="edit btn btn-primary btn-sm">Edit</button>
+									</div>
+									<br />
+									<br />
+									<div id="pattern-editor-edit-structure" style="display: none" class="panel panel-default">
+										<div class="panel-heading">
+											Rhythmic structure edition
+										</div>
+										<div class="panel-body">
+											<div class="edition-container">
+											</div>
+											<div class="btn-group" role="group" aria-label="pattern-editor-edit-structure-actions"
+												id="pattern-editor-edit-structure-actions">
+												<button id="pattern-editor-edit-structure-ok" type="button" class="btn btn-default btn-primary">
+													<span class="glyphicon glyphicon-ok"></span> Ok
+												</button>
+												<button id="pattern-editor-edit-structure-append" type="button" class="btn btn-default">
+													<span class="glyphicon glyphicon-plus"></span> Append
+												</button>
+											</div>
+<!--
+											<div class="add" style="display: none;">
+												<form class="form-horizontal">
+													<div class="form-group">
+														<label for="pattern-editor-nb-notes">Number of notes</label>
+														<input type="number" class="form-control"
+															id="pattern-editor-nb-notes" placeholder="4" min="1" />
+														<span class="help-block">
+															Number of notes in this part of the pattern.
+															<br />
+															It is a strictly positive integer.
+														</span>
+													</div>
+													<div class="form-group">
+														<label for="pattern-editor-note-type">Note type</label>
+														<select class="form-control"
+															id="pattern-editor-note-type">
+															<option value="1"><b>1</b> (whole note)</option>
+															<option value="2"><b>2</b> (half note)</option>
+															<option value="4" selected><b>4</b> (quarter note)</option>
+															<option value="8"><b>8</b> (eighth note)</option>
+															<option value="16"><b>16</b> (sixteenth note)</option>
+														</select>
+														<span class="help-block">
+															It is a strictly positive integer. It can be seen as one beat's length.
+															It is both a time unit and as a note length.
+														</span>
+													</div>
+													<div class="form-group">
+														<label for="pattern-editor-nb-repetitions">Number of times this cell is repeated</label>
+														<input type="number" class="form-control"
+															id="pattern-editor-nb-repetitions" placeholder="1" min="1" />
+														<span class="help-block">
+															Number of times your rhythmic pattern will be repeated.
+														</span>
+													</div>
+													<button id="pattern-editor-add-pattern-to-structure-add" type="button" class="btn btn-default btn-primary">
+														<span class="glyphicon glyphicon-add"></span> Add
+													</button>
+												</form>
+											</div>
+-->
+										</div>
+									</div>
 								</div>
 								<div class="options">
 									<blockquote><small>Options</small></blockquote>
 									<form>
 										<div class="form-group">
-											<label for="pattern-editor-option-loop-n-times">Loop <i>n</i> times</label>
+											<label for="pattern-editor-option-nb-repetitions">Loop <i>n</i> times</label>
 											<input type="number" class="form-control"
-												id="pattern-editor-option-loop-n-times" placeholder="1" min="1" />
+												id="pattern-editor-option-nb-repetitions" placeholder="1" min="1" />
 											<span class="help-block">
-												You can optionally chain several times the main structure to form
+												You can optionally chain several times the structure to form
 												your pattern's complete rhythmic structure.
 												<br />
 												<b>Ex :</b> <i>1</i> (the default) means "don't loop several times"
 												<br />
-												<b>Ex :</b> <i>2</i> means "repeat the main structure twice to build my pattern's rhythmic structure"
+												<b>Ex :</b> <i>2</i> means "repeat the structure twice to build my pattern's rhythmic structure"
 											</span>
 										</div>
 									</form>
@@ -83,48 +151,6 @@
 				</div>
 			</div>
 			<div class="row">
-<!--
-							<form class="form-horizontal">
-								<div class="form-group">
-									<label for="pattern-editor-time-signature-up">Time signature (up number)</label>
-									<input type="number" class="form-control"
-										id="pattern-editor-time-signature-up" placeholder="4" min="1" />
-									<span class="help-block">
-										If the rhythmic signature is "<i>t</i>/<i>u</i>", then put <i>t</i>'s value here.
-										<br />
-										<i>t</i> is a strictly positive integer. There will <i>t</i> times per bar.
-									</span>
-								</div>
-								<div class="form-group">
-									<label for="pattern-editor-time-signature-down">Time signature (down number)</label>
-									<select class="form-control"
-										id="pattern-editor-time-signature-down">
-										<option value="1"><b>1</b> (whole note)</option>
-										<option value="2"><b>2</b> (half note)</option>
-										<option value="4"><b>4</b> (quarter note)</option>
-										<option value="8"><b>8</b> (eighth note)</option>
-										<option value="16"><b>16</b> (sixteenth note)</option>
-									</select>
-									<span class="help-block">
-										If the rhythmic signature is "<i>t</i>/<i>u</i>", then put <i>u</i>'s value here.
-										<br />
-										<i>u</i> is a strictly positive integer. It can be seen as one beat's length.
-										It is both a time unit and as a note length.
-										<br />
-										A bar is made by chaining <i>t</i> beats of a <i>u</i> time unit.
-									</span>
-								</div>
-								<div class="form-group">
-									<label for="pattern-editor-nb-cell">Bars count in pattern</label>
-									<input type="number" class="form-control"
-										id="pattern-editor-nb-cell" placeholder="2" min="1" />
-									<span class="help-block">
-										The pattern's rhythmic structure is built
-										by chaining <i>n</i> bars.
-									</span>
-								</div>
-							</form>
--->
 				<div class="container-fluid">
 					<div class="panel panel-default">
 						<div class="panel-heading">3. Metadatas &amp; sharing options</div>

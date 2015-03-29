@@ -7,6 +7,13 @@
     font-style: normal;
 }
 
+@font-face {
+	font-family: "MusiSync";
+	src: url('/fonts/MusiSync.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
 a {
     color: tomato;
     text-decoration: none;
@@ -15,6 +22,10 @@ a {
 a:hover {
     color: firebrick;
     text-decoration: none;
+}
+
+.music-note {
+	font-family: "MusiSync";
 }
 
 .play {
@@ -72,6 +83,19 @@ footer {
 
 #pattern-editor textarea.form-control {
 	resize: none;
+}
+
+#pattern-editor .rhythmic-structure .structure-as-string {
+	font-style: italic;
+}
+
+#pattern-editor .rhythmic-structure .edition-container input[type=number] {
+	width: 60px;
+}
+
+#pattern-editor .rhythmic-structure .edition-container .well,
+#pattern-editor .rhythmic-structure .edition-container .separator {
+	margin-bottom: 4px;
 }
 
 #pattern-editor-right .panel .panel-body {
