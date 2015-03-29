@@ -34,7 +34,7 @@ class Pattern
     /**
      * @var string
      * 
-     * @ORM\Column(name="slug", type="string")
+     * @ORM\Column(name="slug", type="string", unique=true)
      */
     private $slug;
     

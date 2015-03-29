@@ -76,6 +76,98 @@ function buildRhythmicPatternEdition() {
 	});
 }
 
+function buildSoundEventsEditor() {
+	var html = "";
+	if (window.patternEditor.rhythmicStructure.patterns.length === 0) {
+		html += "Your pattern's rhythmic structure is empty ! Please build it, then you'll be able to add sound events.";
+	} else {
+		html += "<h4>Voices</h4>";
+		if (window.patternEditor.voices.length === 0) {
+			html += "There is currently no voice in your pattern. Please add at least one.";
+			html += "<br /><br />";
+		} else {
+			html += "<table class=\"table table-hover table-condensed\">";
+			html += "<tbody>";
+			$.each(window.patternEditor.voices, function(index, voice) {
+				html += "<tr>";
+				var soundLabel = "";
+				$.each(sounds, function(index, sound) {
+					if (sound.id === voice.soundId)
+						soundLabel = sound.label;
+				});
+				html += "<td>" + soundLabel + "</td>";
+				html += "<td>";
+				html += "<div class=\"btn-group\" role=\"group\" aria-label=\"voice-actions\">";
+				html += "<button type=\"button\" class=\"delete btn btn-default btn-sm\"><span class=\"glyphicon glyphicon-remove\"></span></button>";
+				html += "</div>";
+				html += "</td>";
+				html += "</tr>";
+			});
+			html += "</tbody>";
+			html += "</table>";
+		}
+		
+		html += "<div style=\"display: none;\" class=\"add-voice-panel panel panel-default\">";
+		html += "<div class=\"panel-body\">";
+		html += "<p>Please select the sound you want to use in your new voice :</p>";
+		html += "<select class=\"sound form-control\">";
+		$.each(sounds, function(index, sound) {
+			html += "<option value=\"" + sound.id + "\">";
+			html += sound.label;
+			html += "</option>";
+		});
+		html += "</select>";
+		html += "<br />";
+		html += "<button type=\"button\" class=\"ok btn btn-primary btn-sm\">Ok</button>";
+		html += "</div>";
+		html += "</div>";
+		
+		html += "<div class=\"btn-group\" role=\"group\ aria-label=\"sound-editor-voices\">";
+		html += "<button type=\"button\" class=\"add btn btn-primary btn-sm\">";
+		html += "<span class=\"glyphicon glyphicon-plus\"></span> Add a voice";
+		html += "</button>";
+		html += "</div>";
+		
+		html += "<h4>Sound occurrences</h4>";
+		html += "<table class=\"sound-events-editor table table-striped table-hover table-condensed\">";
+		html += "<tbody>";
+		$.each(window.patternEditor.voices, function(voiceIndex, voice) {
+			html += "<tr>";
+			var soundLabel = "";
+			$.each(sounds, function(soundIndex, sound) {
+				if (sound.id === voice.soundId)
+					soundLabel = sound.label;
+			});
+			html += "<td>" + soundLabel + "</td>";
+			var tickIndex = 0;
+			for (var i = 0; i < window.patternEditor.rhythmicStructure.nbRepetitions; i ++) {
+				$.each(window.patternEditor.rhythmicStructure.patterns, function(patternIndex, pattern) {
+					for (var j = 0; j < pattern.nbRepetitions; j++)
+						for (var k = 0; k < pattern.nbNotes; k++) {
+							html += "<td><input type=\"checkbox\" id=\"sound-editor-sound-occurrence-" + voiceIndex + "-" + tickIndex + "\"/></td>";
+							tickIndex++;
+						}
+				});
+			}
+			html += "</tr>";
+		});
+		html += "<tr>";
+		html += "<td>Rhythm</td>"
+		for (var i = 0; i < window.patternEditor.rhythmicStructure.nbRepetitions; i ++) {
+			$.each(window.patternEditor.rhythmicStructure.patterns, function(patternIndex, pattern) {
+				for (var j = 0; j < pattern.nbRepetitions; j++)
+					for (var k = 0; k < pattern.nbNotes; k++)
+						html += "<td><span class=\"music-note\">" + noteToCharacter(pattern.noteType) + "</span></td>";
+			});
+		}
+		html += "</tr>";
+		html += "</tbody>";
+		html += "</table>"
+	}
+
+	$("#pattern-editor .sound-events-editor-container").html(html);
+}
+
 function validatePatternEditor() {
 	var res = [];
 	//FIXME
@@ -88,10 +180,12 @@ $(document).ready(function() {
 		rhythmicStructure: {
 			patterns: [],
 			nbRepetitions: 1
-		}
+		},
+		voices: []
 	};
 	
 	drawRhythmicStructure();
+	buildSoundEventsEditor();
 	$("#pattern-editor-option-nb-repetitions").val(1);
 	$("#pattern-editor-structure-actions .edit").attr("disabled", null);
 	
@@ -119,6 +213,7 @@ $(document).ready(function() {
 					nbRepetitions: parseInt(container.find(".nb-repetitions").val()),
 			}
 			drawRhythmicStructure();
+			buildSoundEventsEditor();
 		});
 
 	$("body").on("click", "#pattern-editor .rhythmic-structure .edition-container .remove", function(e) {
@@ -133,6 +228,7 @@ $(document).ready(function() {
 		});
 		window.patternEditor.rhythmicStructure.patterns = newPatterns;
 		drawRhythmicStructure();
+		buildSoundEventsEditor();
 		return false;
 	});
 
@@ -145,6 +241,7 @@ $(document).ready(function() {
 		});
 		buildRhythmicPatternEdition();
 		drawRhythmicStructure();
+		buildSoundEventsEditor();
 		return false;
 	});
 	
@@ -158,6 +255,24 @@ $(document).ready(function() {
 	$("#pattern-editor-option-nb-repetitions").change(function() {
 		window.patternEditor.rhythmicStructure.nbRepetitions = parseInt($(this).val());
 		drawRhythmicStructure();
+		buildSoundEventsEditor();
+	});
+
+	$("body").on("click", "#pattern-editor .sound-events-editor-container .add", function(e) {
+		e.preventDefault();
+		$("#pattern-editor .sound-events-editor-container .add-voice-panel").css({display: "block"});
+		return false;
+	});
+
+	$("body").on("click", "#pattern-editor .sound-events-editor-container .ok", function(e) {
+		e.preventDefault();
+		window.patternEditor.voices.push({
+			soundId: parseInt($("#pattern-editor .sound-events-editor-container .add-voice-panel .sound").val()),
+			volume: 100,
+			soundOccurrences: []
+		});
+		buildSoundEventsEditor();
+		return false;
 	});
 
 	$("#pattern-editor-generate-slug").click(function(e) {

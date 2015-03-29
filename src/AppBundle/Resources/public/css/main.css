@@ -99,6 +99,10 @@ footer {
 	margin-bottom: 4px;
 }
 
+#pattern-editor .sound-events-editor td:first-child {
+	width: 100px;
+}
+
 #pattern-editor-right .panel .panel-body {
 	padding-left: 21px;
 	padding-right: 21px;

@@ -28,43 +28,24 @@ class SoundRepository extends EntityRepository {
 			return $collection[0];
 	}
 	
-	public function findNewMaxPosition() {
-		$qb = $this->getEntityManager()
-			->createQueryBuilder("s");
-		// Check if there is at least 1 sound
-		$q = $qb->select("COUNT(s.id) AS soundsCount")
-			->from("AppBundle:Sound", "s")
-			->getQuery();
-		$data = $q->getArrayResult();
-		// If there is no Sound in the DB
-		if ($data[0]["soundsCount"] == 0)
-			return 0;
-		$qb = $this->getEntityManager()
-			->createQueryBuilder("s");
-		$q = $qb->select("MAX(s.position) AS maxPosition")
-			->from("AppBundle:Sound", "s")
-			->getQuery();
-		$data = $q->getArrayResult();
-		return $data[0]["maxPosition"] + 1;
-	}
-	
 	public function importBaseSound($soundData) {
 		$em = $this->getEntityManager();
 		$s = new Sound();
 		$s->setSlug($soundData->slug);
 		$s->setLabel($soundData->label);
-		$newPosition = $this->findNewMaxPosition();
-		$s->setPosition($newPosition);
+		$s->setIsPublic(true);
+		$s->setIsDefault(true);
 		$em->persist($s);
 		$em->flush();
 	}
 	
-	public function findAllAsArray() {
+	public function findAvailableToUserAsArray($user) {
 		$qb = $this->getEntityManager()
 			->createQueryBuilder("s");
 		$q = $qb->select("s")
 			->from("AppBundle:Sound", "s")
-			->orderBy("s.position", "asc")
+			->where("s.isPublic > 0 OR s.isDefault > 0 OR s.user = :u")
+			->setParameter("u", $user)
 			->getQuery();
 		$sounds = $q->getResult();
 		$res = array();

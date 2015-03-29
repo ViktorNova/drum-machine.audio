@@ -34,13 +34,28 @@ class Sound
      * @ORM\Column(name="label", type="string", unique=true)
      */
     private $label;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_public", type="boolean")
+     */
+    private $isPublic;
     
     /**
-     * @var integer
-     * 
-     * @ORM\Column(name="position", type="integer")
+     * @var boolean
+     *
+     * @ORM\Column(name="is_default", type="boolean")
      */
-    private $position;
+    private $isDefault;
+
+    /**
+     * @var \UserBundle\Entity\User
+     *
+     * @ORM\OneToOne(targetEntity="\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
 
     /**
      * @ORM\OneToMany(targetEntity="PatternEvent", mappedBy="sound")
@@ -52,7 +67,8 @@ class Sound
     			"id" => $this->getId(),
     			"slug" => $this->getSlug(),
     			"label" => $this->getLabel(),
-    			"position" => $this->getPosition(),
+    			"isPublic" => $this->getIsPublic(),
+    			"isDefault" => $this->getIsDefault(),
     	);
     }
     
@@ -130,29 +146,6 @@ class Sound
     }
 
     /**
-     * Set position
-     *
-     * @param integer $position
-     * @return Sound
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return integer 
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
      * Set slug
      *
      * @param string $slug
@@ -173,5 +166,74 @@ class Sound
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set isPublic
+     *
+     * @param boolean $isPublic
+     * @return Sound
+     */
+    public function setIsPublic($isPublic)
+    {
+        $this->isPublic = $isPublic;
+
+        return $this;
+    }
+
+    /**
+     * Get isPublic
+     *
+     * @return boolean 
+     */
+    public function getIsPublic()
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * Set isDefault
+     *
+     * @param boolean $isDefault
+     * @return Sound
+     */
+    public function setIsDefault($isDefault)
+    {
+        $this->isDefault = $isDefault;
+
+        return $this;
+    }
+
+    /**
+     * Get isDefault
+     *
+     * @return boolean 
+     */
+    public function getIsDefault()
+    {
+        return $this->isDefault;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     * @return Sound
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

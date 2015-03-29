@@ -14,7 +14,7 @@ class DefaultController extends Controller {
     	$em = $this->get("doctrine")->getManager();
     	$user = $this->get("security.context")->getToken()->getUser();
     	$soundsData = $em->getRepository("AppBundle:Sound")
-    		->findAllAsArray();
+    		->findAvailableToUserAsArray($user);
     	$patternsData = $em->getRepository("AppBundle:Pattern")
     		->findAvailableToUser($user);
     	$pageActions = array(
