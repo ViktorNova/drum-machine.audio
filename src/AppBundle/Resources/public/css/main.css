@@ -87,6 +87,7 @@ footer {
 
 #pattern-editor .rhythmic-structure .structure-as-string {
 	font-style: italic;
+	font-weight: bold;
 }
 
 #pattern-editor .rhythmic-structure .edition-container input[type=number] {

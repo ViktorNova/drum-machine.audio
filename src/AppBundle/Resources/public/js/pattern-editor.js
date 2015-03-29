@@ -5,11 +5,12 @@ function openPatternEditor() {
 function drawRhythmicStructure() {
 	var html = "";
 	if (window.patternEditor.rhythmicStructure.patterns.length === 0) {
-		html += "Empty";
+		html += "Empty rhythmic structure !";
 	} else {
+		if (window.patternEditor.rhythmicStructure.nbRepetitions > 1)
+			html += "(";
 		var enableGroupParenthesis = false;
-		if (window.patternEditor.rhythmicStructure.patterns.length > 1
-			|| window.patternEditor.rhythmicStructure.nbRepetitions > 1)
+		if (window.patternEditor.rhythmicStructure.patterns.length > 1)
 			enableGroupParenthesis = true;
 		var groups = [];
 		$.each(window.patternEditor.rhythmicStructure.patterns, function(index, elt) {
@@ -28,7 +29,7 @@ function drawRhythmicStructure() {
 		});
 		html += groups.join(" + ");
 		if (window.patternEditor.rhythmicStructure.nbRepetitions > 1)
-			html += " <small>&times; " + window.patternEditor.rhythmicStructure.nbRepetitions + "</small>";
+			html += ") <small>&times; " + window.patternEditor.rhythmicStructure.nbRepetitions + "</small>";
 	}
 	$("#pattern-editor .rhythmic-structure .structure-as-string").html(html);
 }
@@ -57,7 +58,10 @@ function buildRhythmicPatternEdition() {
 			str += "</select>";
 			str += " repeated ";
 			str += "<input type=\"number\" class=\"nb-repetitions\" placeholder=\"1\" min=\"1\" />";
-			str += " times"
+			str += " times";
+			str += "<button type=\"button\" class=\"remove btn btn-default btn-xs pull-right\">";
+			str += "<span class=\"glyphicon glyphicon-remove\"></span>";
+			str += "</button>";
 			str += "</div>";
 			blocks.push(str);
 		});
@@ -70,10 +74,6 @@ function buildRhythmicPatternEdition() {
 		container.find(".note-type").val(pattern.noteType);
 		container.find(".nb-repetitions").val(pattern.nbRepetitions);
 	});
-}
-
-function drawPatternStructureVisualization() {
-	//FIXME
 }
 
 function validatePatternEditor() {
@@ -92,8 +92,8 @@ $(document).ready(function() {
 	};
 	
 	drawRhythmicStructure();
-	drawPatternStructureVisualization();
 	$("#pattern-editor-option-nb-repetitions").val(1);
+	$("#pattern-editor-structure-actions .edit").attr("disabled", null);
 	
 	$("#pattern-editor .pattern-editor-close").click(function(e) {
 		e.preventDefault();
@@ -103,11 +103,39 @@ $(document).ready(function() {
 	
 	$("#pattern-editor-structure-actions .edit").click(function(e) {
 		e.preventDefault();
+		$("#pattern-editor-structure-actions .edit").attr("disabled", "disabled");
 		buildRhythmicPatternEdition();
 		$("#pattern-editor-edit-structure").css({display: "block"});
 		return false;
 	});
-	
+
+	$("body").on("change",
+			"#pattern-editor .rhythmic-structure .edition-container .nb-notes, #pattern-editor .rhythmic-structure .edition-container .note-type, #pattern-editor .rhythmic-structure .edition-container .nb-repetitions", function() {
+			var container = $(this).parent(".block");
+			var index = container.data("index");
+			window.patternEditor.rhythmicStructure.patterns[index] = {
+					nbNotes: parseInt(container.find(".nb-notes").val()),
+					noteType: parseInt(container.find(".note-type").val()),
+					nbRepetitions: parseInt(container.find(".nb-repetitions").val()),
+			}
+			drawRhythmicStructure();
+		});
+
+	$("body").on("click", "#pattern-editor .rhythmic-structure .edition-container .remove", function(e) {
+		e.preventDefault();
+		var container = $(this).parent(".block");
+		var indexToRemove = container.data("index");
+		container.remove();
+		var newPatterns = [];
+		$.each(window.patternEditor.rhythmicStructure.patterns, function(index, elt) {
+			if (index !== indexToRemove)
+				newPatterns.push(elt);
+		});
+		window.patternEditor.rhythmicStructure.patterns = newPatterns;
+		drawRhythmicStructure();
+		return false;
+	});
+
 	$("#pattern-editor-edit-structure-append").click(function(e) {
 		e.preventDefault();
 		window.patternEditor.rhythmicStructure.patterns.push({
@@ -117,25 +145,12 @@ $(document).ready(function() {
 		});
 		buildRhythmicPatternEdition();
 		drawRhythmicStructure();
-		drawPatternStructureVisualization();
 		return false;
 	});
 	
-	$("body").on("change",
-		"#pattern-editor .rhythmic-structure .edition-container .nb-notes, #pattern-editor .rhythmic-structure .edition-container .note-type, #pattern-editor .rhythmic-structure .edition-container .nb-repetitions", function() {
-		var container = $(this).parent(".block");
-		var index = container.data("index");
-		window.patternEditor.rhythmicStructure.patterns[index] = {
-				nbNotes: parseInt(container.find(".nb-notes").val()),
-				noteType: parseInt(container.find(".note-type").val()),
-				nbRepetitions: parseInt(container.find(".nb-repetitions").val()),
-		}
-		drawRhythmicStructure();
-		drawPatternStructureVisualization();
-	});
-
 	$("#pattern-editor-edit-structure-ok").click(function(e) {
 		e.preventDefault();
+		$("#pattern-editor-structure-actions .edit").attr("disabled", null);
 		$("#pattern-editor-edit-structure").css({display: "none"});
 		return false;
 	});
@@ -143,7 +158,6 @@ $(document).ready(function() {
 	$("#pattern-editor-option-nb-repetitions").change(function() {
 		window.patternEditor.rhythmicStructure.nbRepetitions = parseInt($(this).val());
 		drawRhythmicStructure();
-		drawPatternStructureVisualization();
 	});
 
 	$("#pattern-editor-generate-slug").click(function(e) {

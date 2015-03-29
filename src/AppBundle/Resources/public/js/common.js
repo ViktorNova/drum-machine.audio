@@ -56,7 +56,7 @@ $(document).ready(function() {
 		// Fill page actions buttons
 		html = "";
 		if (currentModeSlug === "metronome") {
-			html += "<button id=\"header-action-add-pattern\" class=\"btn btn-sm btn-default\" type=\"submit\">Add pattern</button>";
+			html += "<button id=\"header-action-add-pattern\" class=\"btn btn-sm btn-default\" type=\"submit\"><span class=\"glyphicon glyphicon-plus\"></span> Add pattern</button>";
 		} else {
 			//TODO
 		}

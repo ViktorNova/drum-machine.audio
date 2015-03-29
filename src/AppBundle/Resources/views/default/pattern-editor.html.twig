@@ -37,13 +37,12 @@
 			<div class="row">
 				<div class="container-fluid">
 					<div class="panel panel-default">
-						<div class="panel-heading">1. Rhythmic cells structure</div>
+						<div class="panel-heading">1. Rhythmic structure</div>
 						<div class="panel-body">
 							<div class="col-xs-12 col-md-6">
 								<div class="rhythmic-structure">
-									<blockquote><small>Rhythmic structure</small></blockquote>
 									<p>
-										<span class="structure-as-string"></span>
+										<div class="structure-as-string well well-sm"></div>
 									</p>
 									<div class="btn-group" role="group" aria-label="pattern-editor-structure-actions"
 										id="pattern-editor-structure-actions">
@@ -67,53 +66,12 @@
 													<span class="glyphicon glyphicon-plus"></span> Append
 												</button>
 											</div>
-<!--
-											<div class="add" style="display: none;">
-												<form class="form-horizontal">
-													<div class="form-group">
-														<label for="pattern-editor-nb-notes">Number of notes</label>
-														<input type="number" class="form-control"
-															id="pattern-editor-nb-notes" placeholder="4" min="1" />
-														<span class="help-block">
-															Number of notes in this part of the pattern.
-															<br />
-															It is a strictly positive integer.
-														</span>
-													</div>
-													<div class="form-group">
-														<label for="pattern-editor-note-type">Note type</label>
-														<select class="form-control"
-															id="pattern-editor-note-type">
-															<option value="1"><b>1</b> (whole note)</option>
-															<option value="2"><b>2</b> (half note)</option>
-															<option value="4" selected><b>4</b> (quarter note)</option>
-															<option value="8"><b>8</b> (eighth note)</option>
-															<option value="16"><b>16</b> (sixteenth note)</option>
-														</select>
-														<span class="help-block">
-															It is a strictly positive integer. It can be seen as one beat's length.
-															It is both a time unit and as a note length.
-														</span>
-													</div>
-													<div class="form-group">
-														<label for="pattern-editor-nb-repetitions">Number of times this cell is repeated</label>
-														<input type="number" class="form-control"
-															id="pattern-editor-nb-repetitions" placeholder="1" min="1" />
-														<span class="help-block">
-															Number of times your rhythmic pattern will be repeated.
-														</span>
-													</div>
-													<button id="pattern-editor-add-pattern-to-structure-add" type="button" class="btn btn-default btn-primary">
-														<span class="glyphicon glyphicon-add"></span> Add
-													</button>
-												</form>
-											</div>
--->
 										</div>
 									</div>
 								</div>
+							</div>
+							<div id="pattern-editor-rhythmic-signature-visual" class="col-xs-12 col-md-6">
 								<div class="options">
-									<blockquote><small>Options</small></blockquote>
 									<form>
 										<div class="form-group">
 											<label for="pattern-editor-option-nb-repetitions">Loop <i>n</i> times</label>
@@ -130,9 +88,6 @@
 										</div>
 									</form>
 								</div>
-							</div>
-							<div id="pattern-editor-rhythmic-signature-visual" class="col-xs-12 col-md-6">
-								Pattern visualization
 							</div>
 						</div>
 					</div>
