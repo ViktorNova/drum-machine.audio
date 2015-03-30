@@ -4,16 +4,16 @@ function openPatternEditor() {
 
 function drawRhythmicStructure() {
 	var html = "";
-	if (window.patternEditor.rhythmicStructure.patterns.length === 0) {
+	if (window.drumMachine.patternEditor.rhythmicStructure.patterns.length === 0) {
 		html += "Empty rhythmic structure !";
 	} else {
-		if (window.patternEditor.rhythmicStructure.nbRepetitions > 1)
+		if (window.drumMachine.patternEditor.rhythmicStructure.nbRepetitions > 1)
 			html += "(";
 		var enableGroupParenthesis = false;
-		if (window.patternEditor.rhythmicStructure.patterns.length > 1)
+		if (window.drumMachine.patternEditor.rhythmicStructure.patterns.length > 1)
 			enableGroupParenthesis = true;
 		var groups = [];
-		$.each(window.patternEditor.rhythmicStructure.patterns, function(index, elt) {
+		$.each(window.drumMachine.patternEditor.rhythmicStructure.patterns, function(index, elt) {
 			var str = "";
 			if (enableGroupParenthesis)
 				str += "(";
@@ -28,15 +28,15 @@ function drawRhythmicStructure() {
 			groups.push(str);
 		});
 		html += groups.join(" + ");
-		if (window.patternEditor.rhythmicStructure.nbRepetitions > 1)
-			html += ") <small>&times; " + window.patternEditor.rhythmicStructure.nbRepetitions + "</small>";
+		if (window.drumMachine.patternEditor.rhythmicStructure.nbRepetitions > 1)
+			html += ") <small>&times; " + window.drumMachine.patternEditor.rhythmicStructure.nbRepetitions + "</small>";
 	}
 	$("#pattern-editor .rhythmic-structure .structure-as-string").html(html);
 }
 
 function buildRhythmicPatternEdition() {
 	var html = "";
-	if (window.patternEditor.rhythmicStructure.patterns.length === 0) {
+	if (window.drumMachine.patternEditor.rhythmicStructure.patterns.length === 0) {
 		html += "<div class=\"well well-sm\">";
 		html += "<i>Empty rhythmic structure !</i>";
 		html += "<br />";
@@ -44,7 +44,7 @@ function buildRhythmicPatternEdition() {
 		html += "</div>";
 	} else {
 		var blocks = [];
-		$.each(window.patternEditor.rhythmicStructure.patterns, function(index, pattern) {
+		$.each(window.drumMachine.patternEditor.rhythmicStructure.patterns, function(index, pattern) {
 			var str = "";
 			str += "<div data-index=\"" + index + "\" class=\"block well well-sm\">";
 			str += "<input type=\"number\" class=\"nb-notes\ placeholder=\"8\" min=\"1\" />";
@@ -68,7 +68,7 @@ function buildRhythmicPatternEdition() {
 		html = blocks.join("<div class=\"separator text-center\"><span class=\"glyphicon glyphicon-plus\"></span></div>");
 	}
 	$("#pattern-editor .rhythmic-structure .edition-container").html(html);
-	$.each(window.patternEditor.rhythmicStructure.patterns, function(index, pattern) {
+	$.each(window.drumMachine.patternEditor.rhythmicStructure.patterns, function(index, pattern) {
 		var container = $("#pattern-editor .rhythmic-structure .edition-container div[data-index=" + index + "]");
 		container.find(".nb-notes").val(pattern.nbNotes);
 		container.find(".note-type").val(pattern.noteType);
@@ -78,20 +78,20 @@ function buildRhythmicPatternEdition() {
 
 function buildSoundEventsEditor() {
 	var html = "";
-	if (window.patternEditor.rhythmicStructure.patterns.length === 0) {
+	if (window.drumMachine.patternEditor.rhythmicStructure.patterns.length === 0) {
 		html += "Your pattern's rhythmic structure is empty ! Please build it, then you'll be able to add sound events.";
 	} else {
 		html += "<h4>Voices</h4>";
-		if (window.patternEditor.voices.length === 0) {
+		if (window.drumMachine.patternEditor.voices.length === 0) {
 			html += "There is currently no voice in your pattern. Please add at least one.";
 			html += "<br /><br />";
 		} else {
 			html += "<table class=\"table table-hover table-condensed\">";
 			html += "<tbody>";
-			$.each(window.patternEditor.voices, function(index, voice) {
+			$.each(window.drumMachine.patternEditor.voices, function(index, voice) {
 				html += "<tr>";
 				var soundLabel = "";
-				$.each(sounds, function(index, sound) {
+				$.each(window.drumMachine.sounds, function(index, sound) {
 					if (sound.id === voice.soundId)
 						soundLabel = sound.label;
 				});
@@ -111,14 +111,17 @@ function buildSoundEventsEditor() {
 		html += "<div class=\"panel-body\">";
 		html += "<p>Please select the sound you want to use in your new voice :</p>";
 		html += "<select class=\"sound form-control\">";
-		$.each(sounds, function(index, sound) {
+		$.each(window.drumMachine.sounds, function(index, sound) {
 			html += "<option value=\"" + sound.id + "\">";
 			html += sound.label;
 			html += "</option>";
 		});
 		html += "</select>";
 		html += "<br />";
+		html += "<div class=\"btn-group\" role=\"group\" aria-label=\"add-voice-actions\">";
 		html += "<button type=\"button\" class=\"ok btn btn-primary btn-sm\">Ok</button>";
+		html += "<button type=\"button\" class=\"cancel btn btn-default btn-sm\">Cancel</button>";
+		html += "</div>";
 		html += "</div>";
 		html += "</div>";
 		
@@ -129,22 +132,28 @@ function buildSoundEventsEditor() {
 		html += "</div>";
 		
 		html += "<h4>Sound occurrences</h4>";
+		html += "<div class=\"text-center\">"
+        html += "<button class=\"play\">";
+        html += "<span class=\"glyphicon glyphicon-play\" aria-hidden=\"true\"></span>";
+        html += "</button>";
+        html += "</div>";
 		html += "<table class=\"sound-events-editor table table-striped table-hover table-condensed\">";
 		html += "<tbody>";
-		$.each(window.patternEditor.voices, function(voiceIndex, voice) {
+		$.each(window.drumMachine.patternEditor.voices, function(voiceIndex, voice) {
 			html += "<tr>";
 			var soundLabel = "";
-			$.each(sounds, function(soundIndex, sound) {
+			$.each(window.drumMachine.sounds, function(soundIndex, sound) {
 				if (sound.id === voice.soundId)
 					soundLabel = sound.label;
 			});
 			html += "<td>" + soundLabel + "</td>";
 			var tickIndex = 0;
-			for (var i = 0; i < window.patternEditor.rhythmicStructure.nbRepetitions; i ++) {
-				$.each(window.patternEditor.rhythmicStructure.patterns, function(patternIndex, pattern) {
+			for (var i = 0; i < window.drumMachine.patternEditor.rhythmicStructure.nbRepetitions; i ++) {
+				$.each(window.drumMachine.patternEditor.rhythmicStructure.patterns, function(patternIndex, pattern) {
 					for (var j = 0; j < pattern.nbRepetitions; j++)
 						for (var k = 0; k < pattern.nbNotes; k++) {
-							html += "<td><input type=\"checkbox\" id=\"sound-editor-sound-occurrence-" + voiceIndex + "-" + tickIndex + "\"/></td>";
+							html += "<td><input type=\"checkbox\" data-tick-index=\"" + tickIndex
+								+ "\" data-voice-index=\"" + voiceIndex + "\" /></td>";
 							tickIndex++;
 						}
 				});
@@ -153,8 +162,8 @@ function buildSoundEventsEditor() {
 		});
 		html += "<tr>";
 		html += "<td>Rhythm</td>"
-		for (var i = 0; i < window.patternEditor.rhythmicStructure.nbRepetitions; i ++) {
-			$.each(window.patternEditor.rhythmicStructure.patterns, function(patternIndex, pattern) {
+		for (var i = 0; i < window.drumMachine.patternEditor.rhythmicStructure.nbRepetitions; i ++) {
+			$.each(window.drumMachine.patternEditor.rhythmicStructure.patterns, function(patternIndex, pattern) {
 				for (var j = 0; j < pattern.nbRepetitions; j++)
 					for (var k = 0; k < pattern.nbNotes; k++)
 						html += "<td><span class=\"music-note\">" + noteToCharacter(pattern.noteType) + "</span></td>";
@@ -176,7 +185,7 @@ function validatePatternEditor() {
 
 $(document).ready(function() {
 
-	window.patternEditor = {
+	window.drumMachine.patternEditor = {
 		rhythmicStructure: {
 			patterns: [],
 			nbRepetitions: 1
@@ -207,7 +216,7 @@ $(document).ready(function() {
 			"#pattern-editor .rhythmic-structure .edition-container .nb-notes, #pattern-editor .rhythmic-structure .edition-container .note-type, #pattern-editor .rhythmic-structure .edition-container .nb-repetitions", function() {
 			var container = $(this).parent(".block");
 			var index = container.data("index");
-			window.patternEditor.rhythmicStructure.patterns[index] = {
+			window.drumMachine.patternEditor.rhythmicStructure.patterns[index] = {
 					nbNotes: parseInt(container.find(".nb-notes").val()),
 					noteType: parseInt(container.find(".note-type").val()),
 					nbRepetitions: parseInt(container.find(".nb-repetitions").val()),
@@ -222,11 +231,11 @@ $(document).ready(function() {
 		var indexToRemove = container.data("index");
 		container.remove();
 		var newPatterns = [];
-		$.each(window.patternEditor.rhythmicStructure.patterns, function(index, elt) {
+		$.each(window.drumMachine.patternEditor.rhythmicStructure.patterns, function(index, elt) {
 			if (index !== indexToRemove)
 				newPatterns.push(elt);
 		});
-		window.patternEditor.rhythmicStructure.patterns = newPatterns;
+		window.drumMachine.patternEditor.rhythmicStructure.patterns = newPatterns;
 		drawRhythmicStructure();
 		buildSoundEventsEditor();
 		return false;
@@ -234,7 +243,7 @@ $(document).ready(function() {
 
 	$("#pattern-editor-edit-structure-append").click(function(e) {
 		e.preventDefault();
-		window.patternEditor.rhythmicStructure.patterns.push({
+		window.drumMachine.patternEditor.rhythmicStructure.patterns.push({
 			nbNotes: 8,
 			noteType: 8,
 			nbRepetitions: 1,
@@ -253,7 +262,7 @@ $(document).ready(function() {
 	});
 	
 	$("#pattern-editor-option-nb-repetitions").change(function() {
-		window.patternEditor.rhythmicStructure.nbRepetitions = parseInt($(this).val());
+		window.drumMachine.patternEditor.rhythmicStructure.nbRepetitions = parseInt($(this).val());
 		drawRhythmicStructure();
 		buildSoundEventsEditor();
 	});
@@ -261,18 +270,61 @@ $(document).ready(function() {
 	$("body").on("click", "#pattern-editor .sound-events-editor-container .add", function(e) {
 		e.preventDefault();
 		$("#pattern-editor .sound-events-editor-container .add-voice-panel").css({display: "block"});
+		$("#pattern-editor .sound-events-editor-container .add").prop("disabled", true);
 		return false;
 	});
 
 	$("body").on("click", "#pattern-editor .sound-events-editor-container .ok", function(e) {
 		e.preventDefault();
-		window.patternEditor.voices.push({
-			soundId: parseInt($("#pattern-editor .sound-events-editor-container .add-voice-panel .sound").val()),
+		var soundId = parseInt($("#pattern-editor .sound-events-editor-container .add-voice-panel .sound").val());
+		// Lazy-load the corresponding sound
+		loadSound(soundId);
+		// Build empty sound occurrences list according to the rhythmic structure
+		var soundOccurrences = [];
+		for (var i = 0; i < window.drumMachine.patternEditor.rhythmicStructure.nbRepetitions; i ++) {
+			$.each(window.drumMachine.patternEditor.rhythmicStructure.patterns, function(patternIndex, pattern) {
+				for (var j = 0; j < pattern.nbRepetitions; j++)
+					for (var k = 0; k < pattern.nbNotes; k++) {
+						soundOccurrences.push(false);
+					}
+			});
+		}
+		window.drumMachine.patternEditor.voices.push({
+			soundId: soundId,
 			volume: 100,
-			soundOccurrences: []
+			soundOccurrences: soundOccurrences
 		});
 		buildSoundEventsEditor();
 		return false;
+	});
+
+	$("body").on("click", "#pattern-editor .sound-events-editor-container .cancel", function(e) {
+		e.preventDefault();
+		$("#pattern-editor .sound-events-editor-container .add-voice-panel").css({display: "none"});
+		$("#pattern-editor .sound-events-editor-container .add").prop("disabled", false);
+		return false;
+	});
+
+	$("body").on("click", "#pattern-editor .sound-events-editor-container .play", function(e) {
+		e.preventDefault();
+		playPattern(window.drumMachine.patternEditor);
+		return false;
+	});
+
+	$("body").on("change", "#pattern-editor .sound-events-editor input[type=checkbox]", function(e) {
+		var voiceIndex = parseInt($(this).data("voice-index"));
+		var tickIndex = parseInt($(this).data("tick-index"));
+		var newVal = null;
+		if ($(this).prop("checked")) {
+			newVal = true;
+		} else {
+			newVal = false;
+		}
+		window.drumMachine.patternEditor.voices[voiceIndex].soundOccurrences[tickIndex] = newVal;
+		// Copy the pattern to window.drumMachine.currentPattern
+		// so that the player is aware of the changes
+		window.drumMachine.currentPattern = window.drumMachine.patternEditor;
+//console.log(window.drumMachine.currentPattern);
 	});
 
 	$("#pattern-editor-generate-slug").click(function(e) {

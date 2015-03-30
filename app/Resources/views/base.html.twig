@@ -26,17 +26,32 @@
         <script src="/lib/jquery.knob.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-			var metronomeWorkerFilename = "{{ asset('bundles/app/js/metronome/metronome-worker.js') }}";
-			var patternsJsonUrl = "{{ asset('bundles/app/json/metronome/patterns.json') }}";
-			var sounds = {{ sounds|json_encode|raw }};
-			var patterns = {{ patterns|json_encode|raw }};
-			var pageActions = {{ pageActions|json_encode|raw }};
+
+        	window.drumMachine = {
+				timerWorkerFilename: "{{ asset('bundles/app/js/timer-worker.js') }}",
+				sounds: {{ sounds|json_encode|raw }},
+				patterns: {{ patterns|json_encode|raw }},
+				format: (new Audio().canPlayType('audio/ogg') !== '' ? 'ogg' : 'mp3'),
+				scheduleAheadTime:0.1,
+				audioContext: new AudioContext(),
+				loadedSounds: [],
+				tempo: 120,
+				currentTickIndex: 0,
+				nextTickTime: 0.0,
+				currentPattern: null,
+				schedulerTimeInterval: 25, // Scheduler's time interval (in milliseconds)
+				masterVolume: 100,
+				tempo: 120,
+				isPlaying: false,
+				timerWorker: null
+        	}
+        	var pageActions = {{ pageActions|json_encode|raw }};
+
         </script>
         {% javascripts
         	'@AppBundle/Resources/public/js/common.js'
    			'@AppBundle/Resources/public/js/pattern-editor.js'
-        	'@AppBundle/Resources/public/js/metronome/metronome.js'
-        	'@AppBundle/Resources/public/js/metronome/metronome-worker.js'
+        	'@AppBundle/Resources/public/js/audio.js'
         %}
     		<script type="text/javascript" src="{{ asset_url }}"></script>
 		{% endjavascripts %}
