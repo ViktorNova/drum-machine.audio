@@ -68,6 +68,11 @@ a:hover {
   font-weight: bold;
 }
 
+#main-controls .control-label {
+    vertical-align: top;
+    display: inline;
+}
+
 /* Pattern editor */
 
 #pattern-editor textarea.form-control {

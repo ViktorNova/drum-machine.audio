@@ -1,6 +1,7 @@
 function openPatternEditor() {
 	$("#pattern-editor .pattern-editor-empty").css({ display: "none" });
 	$("#pattern-editor .pattern-editor-loaded").css({ display: "block" });
+	$("#find-pattern-collapse").collapse("hide");
 	$("#pattern-editor-collapse").collapse('show');
 }
 
