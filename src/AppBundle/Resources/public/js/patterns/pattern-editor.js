@@ -1,5 +1,7 @@
 function openPatternEditor() {
-	$("#pattern-editor").css({ display: "block" });
+	$("#pattern-editor .pattern-editor-empty").css({ display: "none" });
+	$("#pattern-editor .pattern-editor-loaded").css({ display: "block" });
+	$("#pattern-editor-collapse").collapse('show');
 }
 
 function drawRhythmicStructure() {
@@ -203,7 +205,7 @@ $(document).ready(function() {
 		$("#pattern-editor").css({ display: "none" });
 		return false;
 	});
-	
+
 	$("#pattern-editor-structure-actions .edit").click(function(e) {
 		e.preventDefault();
 		$("#pattern-editor-structure-actions .edit").attr("disabled", "disabled");

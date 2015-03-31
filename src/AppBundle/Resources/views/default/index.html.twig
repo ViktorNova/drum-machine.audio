@@ -1,27 +1,68 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+<div role="tabpanel">
 
-<div class="row">
-	<div class="col-xs-12">
-		<div id="patterns-tabpanel" role="tabpanel">
-		
-			<!-- Nav tabs -->
-			<ul id="palos" class="nav nav-tabs" role="tablist">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<!-- Tab switcher -->
+			<ul class="nav nav-pills" role="tablist">
+			    <li role="presentation" class="active">
+			    	<a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+			    		Home
+			    	</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#patterns" aria-controls="patterns" role="tab" data-toggle="tab">
+			    		Patterns
+			    	</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#samples" aria-controls="samples" role="tab" data-toggle="tab">
+			    		Samples
+			    	</a>
+			    </li>
 			</ul>
-		
 			<!-- Tab panes -->
-			<div id="metronome-tab-content" class="tab-content">
-			</div>
-		
+		  	<div class="tab-content">
+		    	<div role="tabpanel" class="tab-pane active" id="home">
+					{% include "AppBundle:default:home/home.html.twig" %}
+		    	</div>
+		    	<div role="tabpanel" class="tab-pane" id="patterns">
+					{% include "AppBundle:default:patterns/patterns.html.twig" %}
+		    	</div>
+		    	<div role="tabpanel" class="tab-pane" id="samples">
+		    		{% include "AppBundle:default:samples/samples.html.twig" %}
+		    	</div>
+		  	</div>
 		</div>
 	</div>
+
 </div>
 
-<div class="row">
-	<div class="col-xs-12">
-		{% include "AppBundle:default:pattern-editor.html.twig" %}
-	</div>
-</div>
+{# <div class="row">#}
+{# 	<div class="col-xs-12">#}
+{# 		{% include "AppBundle:default:start.html.twig" %}#}
+{# 	</div>#}
+{# </div>#}
+
+{# <div class="row">#}
+{# 	<div class="col-xs-12">#}
+{# 		{% include "AppBundle:default:pattern-editor.html.twig" %}#}
+{# 	</div>#}
+{# </div>#}
+
+{% endblock %}
+
+{% block javascripts %}
+
+	{% javascripts
+		'@AppBundle/Resources/public/js/patterns/pattern-editor.js'
+       	'@AppBundle/Resources/public/js/audio.js'
+        '@AppBundle/Resources/public/js/homepage.js'
+        '@AppBundle/Resources/public/js/patterns/patterns.js'
+    %}
+    	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
 
 {% endblock %}

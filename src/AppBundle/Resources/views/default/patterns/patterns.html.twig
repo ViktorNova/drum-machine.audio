@@ -1,0 +1,46 @@
+<div class="btn-group" role="group" aria-label="patterns-main-actions"
+	id="patterns-main-actions">
+	<button type="button" class="create-pattern btn btn-primary btn-sm">
+		<span class="glyphicon glyphicon-plus"></span> Create a pattern
+	</button>
+</div>
+<br />
+<br />
+<div class="panel-group" id="patterns" role="tablist" aria-multiselectable="true">
+  	<div class="panel panel-default">
+    	<div class="panel-heading" role="tab" id="patterns-find-heading">
+      		<h4 class="panel-title">
+        		<a data-toggle="collapse" data-parent="#patterns"
+        			href="#find-pattern-collapse" aria-expanded="true"
+        			aria-controls="find-pattern-collapse">
+          			Find a pattern
+        		</a>
+      		</h4>
+    	</div>
+    	<div id="find-pattern-collapse" class="panel-collapse collapse in"
+    		role="tabpanel" aria-labelledby="find-pattern-heading">
+      		<div class="panel-body">
+				<p>
+					TODO: pattern browser
+				</p>
+      		</div>
+    	</div>
+  	</div>
+  	<div class="panel panel-default">
+    	<div class="panel-heading" role="tab" id="pattern-editor-heading">
+      		<h4 class="panel-title">
+        		<a class="collapsed" data-toggle="collapse"
+        			data-parent="#patterns"	href="#pattern-editor-collapse"
+        			aria-expanded="false" aria-controls="pattern-editor-collapse">
+          			Pattern editor
+        		</a>
+      		</h4>
+    	</div>
+    	<div id="pattern-editor-collapse" class="panel-collapse collapse"
+    		role="tabpanel" aria-labelledby="pattern-editor-heading">
+      		<div class="panel-body">
+        		{% include "AppBundle:default:patterns/pattern-editor.html.twig" %}
+      		</div>
+    	</div>
+  	</div>
+</div>

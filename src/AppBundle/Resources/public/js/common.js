@@ -64,12 +64,6 @@ $(document).ready(function() {
 	}
 	
 	headerResetActions();
-	
-	$("body").on("click", "#header-action-add-pattern", function(e) {
-		e.preventDefault();
-		openPatternEditor();
-		return false;
-	});
 
 	$('#main-controls .master-volume').knob({
         width: 60,

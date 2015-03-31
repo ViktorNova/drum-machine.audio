@@ -44,14 +44,12 @@
 				tempo: 120,
 				isPlaying: false,
 				timerWorker: null
-        	}
+        	};
         	var pageActions = {{ pageActions|json_encode|raw }};
 
         </script>
         {% javascripts
         	'@AppBundle/Resources/public/js/common.js'
-   			'@AppBundle/Resources/public/js/pattern-editor.js'
-        	'@AppBundle/Resources/public/js/audio.js'
         %}
     		<script type="text/javascript" src="{{ asset_url }}"></script>
 		{% endjavascripts %}
