@@ -1,13 +1,35 @@
 <header id="header" class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-6">
-			<h1 id="title">drum-machine.audio</h1>
+			<a href="{{ path('homepage') }}" title="Home page">
+				<h1 id="title">drum-machine.audio</h1>
+			</a>
 			<b>A web-based drum machine</b>
 			<br />
 			<br />
 		</div>
 		<div id="header-actions" class="col-xs-12 col-sm-6 text-right">
-
+			<div class="btn-group" role="group" aria-label="header-action-buttons"
+				id="header-action-buttons">
+				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+					<a href="{{ path('fos_user_security_logout') }}">
+						<button type="button" class="logout btn btn-primary btn-sm">
+							Log out
+						</button>
+					</a>
+				{% else %}
+					<a href="{{ path('fos_user_security_login') }}">
+						<button type="button" class="login btn btn-primary btn-sm">
+							Log in
+						</button>
+					</a>
+					<a href="{{ path('fos_user_registration_register') }}">
+						<button type="button" class="create-account btn btn-primary btn-sm">
+							Create an account
+						</button>
+					</a>
+				{% endif %}
+			</div>
 		</div>
 	</div>
 </header>

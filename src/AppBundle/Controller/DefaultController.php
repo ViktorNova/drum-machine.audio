@@ -17,21 +17,10 @@ class DefaultController extends Controller {
     		->findAvailableToUserAsArray($user);
     	$patternsData = $em->getRepository("AppBundle:Pattern")
     		->findAvailableToUser($user);
-    	$pageActions = array(
-    		array(
-    			"Patterns list"
-    		),
-    		array(
-    			"Backtracks list"
-    		),
-    		array(
-    			"Settings"
-    		),
-    	);
         return $this->render('AppBundle::default/index.html.twig', array(
         	"sounds" => $soundsData,
         	"patterns" => $patternsData,
-        	"pageActions" => $pageActions,
+        	"showMainControls" => true,
         ));
     }
 
