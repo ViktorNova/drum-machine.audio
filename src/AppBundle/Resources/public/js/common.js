@@ -31,5 +31,13 @@ function noteToCharacter(note) {
 }
 
 $(document).ready(function() {
-	
+
+	$("body").on("click", "#header-actions .email", function(e) {
+		e.preventDefault();
+		if ($("#profile").length > 0) {
+			$("#homepage-tabpanel a[href=\"#profile\"]").tab("show");
+		}
+		return false;
+	});
+
 });

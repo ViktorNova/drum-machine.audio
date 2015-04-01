@@ -9,6 +9,9 @@
 			<br />
 		</div>
 		<div id="header-actions" class="col-xs-12 col-sm-6 text-right">
+			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+				Hello, <a href="#" class="email">{{ app.user.email }}</a> ! 
+			{% endif %}
 			<div class="btn-group" role="group" aria-label="header-action-buttons"
 				id="header-action-buttons">
 				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
